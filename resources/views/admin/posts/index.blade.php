@@ -75,12 +75,12 @@
                             @foreach ($posts as $post)
                                 <tr>
                                     <td><input type="checkbox" name="selected_posts[]" class="row-checkbox" value="{{ $post->id }}"></td>
-                                    <td>{{ $post->warehouse }}</td>
-                                    <td>{{ $post->city }}</td>
-                                    <td>{{ $post->card }}</td>
-                                    <td>{{ $post->quantity }}</td>
-                                    <td>{{ $post->date}}</td>
-                                    <td>{{ $post->status }}</td>
+                                    <td><a href="{{ route('admin.dashboard.posts.show', $post->id) }}" class="text-decoration-none text-dark">{{ $post->warehouse }}</a></td>
+                                    <td><a href="{{ route('admin.dashboard.posts.show', $post->id) }}" class="text-decoration-none text-dark">{{ $post->city }}</a></td>
+                                    <td><a href="{{ route('admin.dashboard.posts.show', $post->id) }}" class="text-decoration-none text-dark">{{ $post->card }}</a></td>
+                                    <td><a href="{{ route('admin.dashboard.posts.show', $post->id) }}" class="text-decoration-none text-dark">{{ $post->quantity }}</a></td>
+                                    <td><a href="{{ route('admin.dashboard.posts.show', $post->id) }}" class="text-decoration-none text-dark">{{ $post->date }}</a></td>
+                                    <td><a href="{{ route('admin.dashboard.posts.show', $post->id) }}" class="text-decoration-none text-dark">{{ $post->status }}</a></td>
                                     <td>
 
                                         <a href="{{ route('admin.dashboard.posts.edit', $post) }}" class="btn btn-primary btn-sm">Редактировать</a>
