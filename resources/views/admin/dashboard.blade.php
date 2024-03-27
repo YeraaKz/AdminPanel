@@ -37,8 +37,10 @@
         <div class="mb-2 d-flex justify-content-between">
             <div>
                 <form action="{{ route('admin.dashboard.posts.search') }}" method="GET" class="d-flex">
-                    <input type="text" name="query" class="form-control" placeholder="Поиск..." value="{{ request('query') }}">
-                    <button type="submit" class="btn btn-primary ml-2 mb-2">Поиск</button>
+                    <div class="d-flex">
+                        <input type="text" name="query" class="form-control" placeholder="Поиск..." value="{{ request('query') }}">
+                        <button type="submit" class="btn btn-primary mb-2">Поиск</button>
+                    </div>
                 </form>
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,6 +83,7 @@
 
             <div>
                 <button class="btn btn-success">Принять в обработку</button>
+                <a href="{{ route('admin.dashboard.posts.export') }}" class="btn btn-info">Экспорт в Excel</a>
             </div>
         </div>
         <div class="row">

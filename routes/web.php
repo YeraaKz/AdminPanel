@@ -9,7 +9,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/posts/export', [PostController::class, 'export']);
 
 Route::prefix('admin')->name('admin.')->group(function (){
 
@@ -20,7 +19,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
 
         Route::get('', [AdminController::class, 'dashboard'])->middleware('admin.auth');
         Route::prefix('posts')->name('posts.')->middleware('admin.auth')->group(function (){
-
+            Route::get('export', [PostController::class, 'export'])->name('export');
             Route::get('search', [PostController::class, 'search'])->name('search');
             Route::get('filter', [PostController::class, 'filter'])->name('filter');
             Route::post('process', [PostController::class, 'process'])->name('process');
