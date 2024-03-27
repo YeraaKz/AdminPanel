@@ -1,8 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('posts')
-<form action="{{route('admin.dashboard.posts.process')}}" method="POST">
-    @csrf
     <div class="container">
         <h1 class="text-center mt-3">Admin panel</h1>
         <div class="mb-2 d-flex justify-content-between">
@@ -50,55 +48,60 @@
                 </div>
             </form>
             <div>
-                <button class="btn btn-success">Принять в обработку</button>
                 <a href="{{ route('admin.dashboard.posts.export') }}" class="btn btn-info">Экспорт в Excel</a>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th></th>
-                            <th>Склад</th>
-                            <th>Город</th>
-                            <th>Карта</th>
-                            <th>Штук</th>
-                            <th>Дата</th>
-                            <th>Статус</th>
-                            <th>Действия</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($posts as $post)
-                            <tr>
-                                <td><input type="checkbox" name="selected_posts[]" class="row-checkbox" value="{{ $post->id }}"></td>
-                                <td>{{ $post->warehouse }}</td>
-                                <td>{{ $post->city }}</td>
-                                <td>{{ $post->card }}</td>
-                                <td>{{ $post->quantity }}</td>
-                                <td>{{ $post->date}}</td>
-                                <td>{{ $post->status }}</td>
-                                <td>
+        <form action="{{route('admin.dashboard.posts.process')}}" method="POST">
+        @csrf
+            <button class="btn btn-success mb-3">Принять в обработку</button>
 
-                                    <a href="{{ route('admin.dashboard.posts.edit', $post) }}" class="btn btn-primary btn-sm">Редактировать</a>
-                                    <form action="{{route('admin.dashboard.posts.close')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="post_id" value="{{$post->id}}">
-                                        <button class="btn btn-danger btn-sm">Закрыть</button>
-                                    </form>
-                                </td>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th></th>
+                                <th>Склад</th>
+                                <th>Город</th>
+                                <th>Карта</th>
+                                <th>Штук</th>
+                                <th>Дата</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @foreach ($posts as $post)
+                                <tr>
+                                    <td><input type="checkbox" name="selected_posts[]" class="row-checkbox" value="{{ $post->id }}"></td>
+                                    <td>{{ $post->warehouse }}</td>
+                                    <td>{{ $post->city }}</td>
+                                    <td>{{ $post->card }}</td>
+                                    <td>{{ $post->quantity }}</td>
+                                    <td>{{ $post->date}}</td>
+                                    <td>{{ $post->status }}</td>
+                                    <td>
+
+                                        <a href="{{ route('admin.dashboard.posts.edit', $post) }}" class="btn btn-primary btn-sm">Редактировать</a>
+                                        <form action="{{route('admin.dashboard.posts.close')}}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="post_id" value="{{$post->id}}">
+                                            <button class="btn btn-danger btn-sm">Закрыть</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    {{ $posts->links() }}
                 </div>
-                {{ $posts->links() }}
             </div>
-        </div>
+        </form>
+
     </div>
-</form>
+
 <script>
     document.getElementById('statusFilter').addEventListener('click', function(event) {
         event.stopPropagation();
