@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PostsExport;
-use App\Http\Exports\PostExport;
+use App\Http\Utils\PostExport;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Utils\PostFilter;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class PostController extends Controller
 {
@@ -39,25 +37,9 @@ class PostController extends Controller
         return view('admin.posts.index', compact('posts'));
     }
 
-    public function filter(Request $request)
+    public function filter(Request $request, PostFilter $postFilter)
     {
-
-        $query = Post::query();
-
-        $query->when($request->filled('status'), function ($q) use ($request){
-            return $q->where('status', $request->status);
-        });
-
-        if ($request->filled('quantity_min')) {
-            $query->where('quantity', '>=', $request->quantity_min);
-        }
-
-        if ($request->filled('quantity_max')) {
-            $query->where('quantity', '<=', $request->quantity_max);
-        }
-
-
-        $posts = $query->paginate(10);
+        $posts = $postFilter->apply($request)->paginate(10);
 
         return view('admin.posts.index', compact('posts'));
     }
