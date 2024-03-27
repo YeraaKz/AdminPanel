@@ -18,12 +18,19 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
 
         Route::get('', [AdminController::class, 'dashboard'])->middleware('admin.auth');
+
         Route::prefix('posts')->name('posts.')->middleware('admin.auth')->group(function (){
+
             Route::get('export', [PostController::class, 'export'])->name('export');
             Route::get('search', [PostController::class, 'search'])->name('search');
+
             Route::get('filter', [PostController::class, 'filter'])->name('filter');
+            Route::get('{post}', [PostController::class, 'show'])->name('show');
+            Route::get('{post}/edit', [PostController::class, 'edit'])->name('edit');
+            Route::put('{post}', [PostController::class, 'update'])->name('update');
             Route::post('process', [PostController::class, 'process'])->name('process');
             Route::post('close', [PostController::class, 'close'])->name('close');
+
         });
     });
 

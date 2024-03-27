@@ -1,47 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Панель управления</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<style>
-    svg {
-        display: none;
-    }
-</style>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Панель Управления</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-    </div>
-    <form action="{{ route('admin.logout') }}" method="POST">
-        @csrf
-        <button type="submit" class="btn btn-danger">Logout</button>
-    </form>
-</nav>
+@extends('layouts.dashboard')
 
+@section('posts')
 <form action="{{route('admin.dashboard.posts.process')}}" method="POST">
     @csrf
     <div class="container">
         <h1 class="text-center mt-3">Admin panel</h1>
         <div class="mb-2 d-flex justify-content-between">
             <div>
-                <form action="{{ route('admin.dashboard.posts.search') }}" method="GET" class="d-flex">
+                <form action="{{ route('admin.dashboard.posts.search', ['query' => request('query')]) }}" method="GET" class="d-flex">
+
                     <div class="d-flex">
                         <input type="text" name="query" class="form-control" placeholder="Поиск..." value="{{ request('query') }}">
                         <button type="submit" class="btn btn-primary mb-2">Поиск</button>
                     </div>
                 </form>
+
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Фильтр
@@ -113,7 +86,8 @@
                                 <td>{{ $post->date}}</td>
                                 <td>{{ $post->status }}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm">Редактировать</button>
+
+                                    <a href="{{ route('admin.dashboard.posts.edit', $post) }}" class="btn btn-primary btn-sm">Редактировать</a>
                                     <form action="{{route('admin.dashboard.posts.close')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="post_id" value="{{$post->id}}">
@@ -130,10 +104,4 @@
         </div>
     </div>
 </form>
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+@endsection

@@ -10,6 +10,6 @@ class AdminController extends Controller
     public function dashboard()
     {
         $posts = Post::paginate(10);
-        return view('admin/dashboard', compact('posts'));
+        return view('admin.posts.index', compact('posts'));
     }
 }
