@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-//        $this->call(AdminsTableSeeder::class);
+        $this->call(AdminsTableSeeder::class); // email: Admin1@example.com, pass: 123
         $this->call(PostsTableSeeder::class);
     }
 }
