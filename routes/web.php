@@ -9,25 +9,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::prefix('admin')->name('admin.')->group(function (){
 
     Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AdminAuthController::class, 'login']);
     Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
-    Route::prefix('dashboard')->name('dashboard.')->group(function (){
 
-        Route::get('', [AdminController::class, 'dashboard'])->middleware('admin.auth');
+    Route::prefix('dashboard')->name('dashboard.')->middleware('admin.auth')->group(function (){
 
-        Route::prefix('posts')->name('posts.')->middleware('admin.auth')->group(function (){
+        Route::get('', [AdminController::class, 'dashboard']);
+
+        Route::prefix('posts')->name('posts.')->group(function (){
 
             Route::get('export', [PostController::class, 'export'])->name('export');
             Route::get('search', [PostController::class, 'search'])->name('search');
-
             Route::get('filter', [PostController::class, 'filter'])->name('filter');
+
             Route::get('{post}', [PostController::class, 'show'])->name('show');
             Route::get('{post}/edit', [PostController::class, 'edit'])->name('edit');
             Route::put('{post}', [PostController::class, 'update'])->name('update');
+
             Route::post('process', [PostController::class, 'process'])->name('process');
             Route::post('close', [PostController::class, 'close'])->name('close');
 
