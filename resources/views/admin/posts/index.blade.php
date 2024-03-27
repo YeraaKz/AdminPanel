@@ -1,41 +1,30 @@
 @extends('layouts.dashboard')
 
 @section('posts')
-
-
-
-<h1 class="text-center mt-3">Admin panel</h1>
-<div class="mt-5 ml-3">
-    <form action="{{ route('admin.dashboard.posts.search', ['query' => request('query')]) }}" method="GET" class="d-flex">
-
-        <div class="d-flex">
-            <input type="text" name="query" class="form-control" placeholder="Поиск..." value="{{ request('query') }}">
-            <button type="submit" class="btn btn-primary mb-2">Поиск</button>
-        </div>
-    </form>
-</div>
 <form action="{{route('admin.dashboard.posts.process')}}" method="POST">
     @csrf
     <div class="container">
+        <h1 class="text-center mt-3">Admin panel</h1>
         <div class="mb-2 d-flex justify-content-between">
             <div>
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Фильтр
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <form class="px-4 py-2" action="{{ route('admin.dashboard.posts.filter') }}" method="GET">
+                    <div class="dropdown-menu px-4" aria-labelledby="filterDropdown">
+                        <form class="px-4 py-2" action="{{ route('admin.dashboard.posts.filter') }}" method="GET" >
                             <div class="form-group">
                                 <label for="statusFilter">По статусу</label>
-                                <select class="form-control" id="statusFilter" name="status">
+                                <select class="form-control " id="statusFilter" name="status">
                                     <option value="">Выберите статус</option>
                                     <option value="New">New</option>
                                     <option value="Processed">Processed</option>
                                     <option value="Closed">Closed</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-outline-primary btn-sm">Применить</button>
+                            <button type="submit" class="form-control btn btn-outline-primary btn-sm">Применить</button>
                         </form>
+
                         <div class="dropdown-divider"></div>
                         <form class="px-4 py-2" action="{{ route('admin.dashboard.posts.filter') }}" method="GET">
                             <div class="form-group">
@@ -51,13 +40,15 @@
                         <form action="{{ route('admin.dashboard.posts.filter') }}" method="GET">
                             <button type="submit" class="btn btn-warning btn-sm px-4 py-2 ml-5" value="">Сбросить</button>
                         </form>
-
-                        <div class="dropdown-divider"></div>
                     </div>
                 </div>
-
             </div>
-
+            <form action="{{ route('admin.dashboard.posts.search', ['query' => request('query')]) }}" method="GET" class="d-flex">
+                <div class="d-flex">
+                    <input type="text" name="query" class="form-control" placeholder="Поиск..." value="{{ request('query') }}">
+                    <button type="submit" class="btn btn-primary mb-2">Поиск</button>
+                </div>
+            </form>
             <div>
                 <button class="btn btn-success">Принять в обработку</button>
                 <a href="{{ route('admin.dashboard.posts.export') }}" class="btn btn-info">Экспорт в Excel</a>
@@ -108,4 +99,9 @@
         </div>
     </div>
 </form>
+<script>
+    document.getElementById('statusFilter').addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+</script>
 @endsection
