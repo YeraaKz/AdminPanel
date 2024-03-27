@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Exports;
+namespace App\Http\Utils;
 
 use App\Models\Post;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
