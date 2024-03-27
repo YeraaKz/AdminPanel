@@ -1,20 +1,24 @@
 @extends('layouts.dashboard')
 
 @section('posts')
+
+
+
+<h1 class="text-center mt-3">Admin panel</h1>
+<div class="mt-5 ml-3">
+    <form action="{{ route('admin.dashboard.posts.search', ['query' => request('query')]) }}" method="GET" class="d-flex">
+
+        <div class="d-flex">
+            <input type="text" name="query" class="form-control" placeholder="Поиск..." value="{{ request('query') }}">
+            <button type="submit" class="btn btn-primary mb-2">Поиск</button>
+        </div>
+    </form>
+</div>
 <form action="{{route('admin.dashboard.posts.process')}}" method="POST">
     @csrf
     <div class="container">
-        <h1 class="text-center mt-3">Admin panel</h1>
         <div class="mb-2 d-flex justify-content-between">
             <div>
-                <form action="{{ route('admin.dashboard.posts.search', ['query' => request('query')]) }}" method="GET" class="d-flex">
-
-                    <div class="d-flex">
-                        <input type="text" name="query" class="form-control" placeholder="Поиск..." value="{{ request('query') }}">
-                        <button type="submit" class="btn btn-primary mb-2">Поиск</button>
-                    </div>
-                </form>
-
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Фильтр
