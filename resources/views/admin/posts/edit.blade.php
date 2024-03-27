@@ -10,6 +10,23 @@
     <title>Document</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" >Панель Управления</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{route('admin.dashboard.')}}">Главная <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+    <form action="{{ route('admin.logout') }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+</nav>
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-12">
